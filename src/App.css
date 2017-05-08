@@ -1,0 +1,30 @@
+.board {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 496px;
+  height: 496px;
+}
+
+.white-square {
+  width: 60px;
+  height: 60px;
+  border: 1px solid black;
+}
+
+.black-square {
+  width: 60px;
+  height: 60px;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+}
+
+/*.row {
+  display: flex;
+  flex-direction: row;
+}
+.square {
+  display: flex;
+  flex-direction: column;
+}*/
