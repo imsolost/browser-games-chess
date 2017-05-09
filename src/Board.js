@@ -1,52 +1,46 @@
 import React, { Component } from 'react'
-// import Square from './Square'
+import Square from './Square'
 
-
-class Square {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-    this.piece = null
-  }
-}
-
-class Board extends Component {
+export default class Board extends Component {
   constructor(props) {
     super(props)
-    // this.state = {
-    //   board: Array( 64 ).fill( null )
-    // }
     this.state = {
       board: this.initializeBoard(),
-      selected: null
+      selected: {}
     }
   }
 
-  // initializeBoard = () => {
-  //   return this.state.board.map( ( square, index ) =>
-  //     <Square {...square} key={`square-${index}`} index={index}/> )
-  // }
-
   initializeBoard = () => {
     let board = {}
-    for (let y = 1; y <= 8; y++) {
+    for ( let y = 1; y <= 8; y++ ) {
       board[y] = {}
-      for (let x = 1; x <= 8; x++) {
+      for ( let x = 1; x <= 8; x++ ) {
         board[y][x] = new Square(x, y)
       }
     }
     return board
   }
 
+  handleClick = (x, y) => {
+    this.setState({ selected: {x: x, y: y} })
+  }
 
   render() {
-    let boardRender = Object.values(this.state.board).reverse().map( (row, index) => {
-      let rows = Object.values(row).map( square => {
-        if (square.x + square.y % 2 ===1) {
-          return <div key={square.x+square.y} className='white-square'>{'x:'+square.x+' '+'y:'+square.y}</div>
+    console.log('selected square', this.state.selected.x, this.state.selected.y);
+
+    let boardDisplay = Object.values( this.state.board ).reverse().map( ( row, index ) => {
+      let rows = Object.values( row ).map( square => {
+        if ( ( square.x + square.y ) % 2 === 1 ) {
+          return <div
+            key={square.x+square.y}
+            className='white square'
+            onClick={this.handleClick.bind(this, square.x, square.y)}></div>
 
         } else {
-          return <div key={square.x+square.y} className='black-square'>{'x:' + square.x+' '+'y:'+square.y}</div>
+          return <div
+            key={square.x+square.y}
+            className='black square'
+            onClick={this.handleClick.bind(this, square.x, square.y)}></div>
         }
       })
       return <div className='row' key={index}>{rows}</div>
@@ -54,10 +48,8 @@ class Board extends Component {
 
     return (
       <div className='board'>
-        { boardRender }
+        { boardDisplay }
       </div>
     )
   }
 }
-
-export default Board;
