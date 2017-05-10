@@ -8,7 +8,7 @@
 	- [Connect Four](#connect-four)
 - [Intermediate Games](#intermediate-games)
 	- [Checkers / Draughts](#checkers-draughts)
-	- [Blackjack](#blackjack)
+	- [blackjack](#blackjack)
 	- [Platform Game](#platform-game)
 - [Advanced Games](#advanced-games)
 	- [Othello / Reversi](#othello-reversi)
@@ -72,9 +72,9 @@ public/js/checkers-draughts.js
 public/css/checkers-draughts.css
 ```
 
-### Blackjack
+### blackjack
 
-Create a web version of the game [Blackjack](https://en.wikipedia.org/wiki/Blackjack). It is recommended that you use [jQuery][jquery].
+Create a web version of the game [blackjack](https://en.wikipedia.org/wiki/blackjack). It is recommended that you use [jQuery][jquery].
 
 Write your game in these files:
 

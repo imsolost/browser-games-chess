@@ -1,7 +1,4 @@
 .board {
-  width: 480px;
-  height: 480px;
-  border: 1px solid black;
 }
 
 .row {
@@ -12,15 +9,83 @@
 .square {
   display: flex;
   flex-direction: column;
-  width: 60px;
-  height: 60px;
+  height: 75px;
+  width: 75px;
+  margin: 0px;
+  border: none;
 }
 
-.white {
-
+.blackSquare {
+  background-color: turquoise;
+  color: black;
 }
 
-.black {
-  background-color: black;
-  color: white;
+.whiteSquare {
+  background-color: white;
+  color: black;
+}
+
+.highlight {
+  box-shadow: 0px 0px 0px 1px turquoise inset;
+  background-color: gold;
+}
+
+.white.King:after {
+  content: "\2654";
+  font-size: 40px
+}
+
+.white.Queen:after {
+  content: "\2655";
+  font-size: 40px
+}
+
+.white.Rook:after {
+  content: "\2656";
+  font-size: 40px
+}
+
+.white.Bishop:after {
+  content: "\2657";
+  font-size: 40px
+}
+
+.white.Knight:after {
+  content: "\2658";
+  font-size: 40px
+}
+
+.white.Pawn:after {
+  content: "\2659";
+  font-size: 40px
+}
+
+.black.King:after {
+  content: "\265A";
+  font-size: 40px
+}
+
+.black.Queen:after {
+  content: "\265B";
+  font-size: 40px
+}
+
+.black.Rook:after {
+  content: "\265C";
+  font-size: 40px
+}
+
+.black.Bishop:after {
+  content: "\265D";
+  font-size: 40px
+}
+
+.black.Knight:after {
+  content: "\265E";
+  font-size: 40px
+}
+
+.black.Pawn:after {
+  content: "\265F";
+  font-size: 40px
 }

@@ -1,52 +1,116 @@
 import React, { Component } from 'react'
 import Square from './Square'
+import { Pawn, Bishop, Rook, Queen, King, Knight } from './Pieces'
 
 export default class Board extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      board: this.initializeBoard(),
-      selected: {}
+      board: this.setupBoard(),
+      selected: null,
+      nextPlayer: 'white'
     }
+    this.setupPieces()
   }
 
-  initializeBoard = () => {
+  setupBoard() {
     let board = {}
-    for ( let y = 1; y <= 8; y++ ) {
+    for( let y = 1; y <= 8; y++ ) {
       board[y] = {}
-      for ( let x = 1; x <= 8; x++ ) {
-        board[y][x] = new Square(x, y)
+      for( let x = 1; x <= 8; x++ ) {
+        board[y][x] = new Square( x, y )
       }
     }
     return board
   }
 
-  handleClick = (x, y) => {
-    this.setState({ selected: {x: x, y: y} })
+  setupPieces() {
+    let board = this.state.board
+    Object.values( board[7] ).forEach( square => square.piece = new Pawn( 'white' ) )
+    Object.values( board[2] ).forEach( square => square.piece = new Pawn( 'black' ) )
+    board[1][3].piece = new Bishop( 'black' )
+    board[1][6].piece = new Bishop( 'black' )
+    board[8][3].piece = new Bishop( 'white' )
+    board[8][6].piece = new Bishop( 'white' )
+    board[1][2].piece = new Knight( 'black' )
+    board[1][7].piece = new Knight( 'black' )
+    board[8][2].piece = new Knight( 'white' )
+    board[8][7].piece = new Knight( 'white' )
+    board[1][1].piece = new Rook( 'black' )
+    board[1][8].piece = new Rook( 'black' )
+    board[8][1].piece = new Rook( 'white' )
+    board[8][8].piece = new Rook( 'white' )
+    board[1][4].piece = new Queen( 'black' )
+    board[8][4].piece = new Queen( 'white' )
+    board[1][5].piece = new King( 'black' )
+    board[8][5].piece = new King( 'white' )
   }
 
-  render() {
-    console.log('selected square', this.state.selected.x, this.state.selected.y);
+  handleClick( x, y ) {
+    if( this.state.selected && x === this.state.selected.x && y === this.state.selected.y ) {
+      this.setState({ selected: null })
+      return
+    }
+    let piece = this.state.board[y][x].piece
+    if( piece.color === this.state.nextPlayer ) {
+      this.setState({ selected: { x:x, y:y } })
+      return
+    }
+    if(this.selectedSquare() && this.isLegal( x,y ) ) {
+      console.log( 'selected', this.state.selected )
+      this.movePiece( x, y )
+    }
+    else if( piece !== 'blank' && piece.color === this.state.nextPlayer ) {
+      this.setState({ selected: { x:x, y:y } })
+    }
+  }
 
-    let boardDisplay = Object.values( this.state.board ).reverse().map( ( row, index ) => {
+  movePiece( x, y ) {
+    this.selectedSquare().piece.moves++
+    let currentState = this.state
+    currentState.nextPlayer === 'white' ? currentState.nextPlayer = 'black' : currentState.nextPlayer = 'white'
+    currentState.board[y][x].piece = this.selectedSquare().piece
+    this.setState(currentState)
+    this.selectedSquare().piece = 'blank'
+    this.setState({ selected: null })
+  }
+
+  isLegal( x, y ){
+    let selected = this.state.selected
+    return this.selectedSquare().piece.legalMove( selected.x, selected.y, x, y )
+  }
+
+  selectedSquare() {
+    if( this.state.selected ) {
+      let board = this.state.board
+      let selected = this.state.selected
+      return board[selected.y][selected.x]
+    }
+    return null
+  }
+
+
+  render(){
+    let boardDisplay = Object.values( this.state.board ).map( ( row, index ) => {
       let rows = Object.values( row ).map( square => {
-        if ( ( square.x + square.y ) % 2 === 1 ) {
-          return <div
-            key={square.x+square.y}
-            className='white square'
-            onClick={this.handleClick.bind(this, square.x, square.y)}></div>
+        let classesArray = []
+        classesArray.push( square.piece.name );
+        ( square.x + square.y ) % 2 === 0 ? classesArray.push( 'whiteSquare' ) : classesArray.push( 'blackSquare' )
+        if( this.selectedSquare() === square ) { classesArray.push( 'highlight' )}
+        if( this.state.selected && this.isLegal( square.x,square.y ) ) { classesArray.push( 'highlight' )}
+        if( square.piece ) { classesArray.push( square.piece.color )}
+        let classes = classesArray.join( ' ' )
 
-        } else {
-          return <div
-            key={square.x+square.y}
-            className='black square'
-            onClick={this.handleClick.bind(this, square.x, square.y)}></div>
-        }
+        return  ( <div
+                  key={ square.x + square.y }
+                  onClick={ () => this.handleClick( square.x,square.y )}
+                  className={ `square + ${classes}` }>
+                </div> )
       })
-      return <div className='row' key={index}>{rows}</div>
+      return <div className='row' key={ index }>{ rows }</div>
     })
 
-    return (
+    return(
       <div className='board'>
         { boardDisplay }
       </div>
