@@ -11,18 +11,14 @@
   flex-direction: column;
   height: 75px;
   width: 75px;
-  margin: 0px;
-  border: none;
 }
 
 .blackSquare {
   background-color: turquoise;
-  color: black;
 }
 
 .whiteSquare {
   background-color: white;
-  color: black;
 }
 
 .highlight {
