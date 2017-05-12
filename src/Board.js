@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import Square from './Square'
-import { Pawn, Rook, Knight, Bishop, Queen, King } from './Pieces'
+import { Square, Pawn, Rook, Knight, Bishop, Queen, King } from './Pieces'
 
 export default class Board extends Component {
   constructor() {
@@ -26,7 +25,6 @@ export default class Board extends Component {
 
   setupPieces() {
     let board = this.state.board
-    Object.values( board[7] ).forEach( square => square.piece = new Pawn( 'white' ) )
     Object.values( board[2] ).forEach( square => square.piece = new Pawn( 'black' ) )
     board[1][8].piece = new Rook( 'black' )
     board[1][7].piece = new Knight( 'black' )
@@ -36,6 +34,7 @@ export default class Board extends Component {
     board[1][3].piece = new Bishop( 'black' )
     board[1][2].piece = new Knight( 'black' )
     board[1][1].piece = new Rook( 'black' )
+    Object.values( board[7] ).forEach( square => square.piece = new Pawn( 'white' ) )
     board[8][8].piece = new Rook( 'white' )
     board[8][7].piece = new Knight( 'white' )
     board[8][6].piece = new Bishop( 'white' )
@@ -57,7 +56,31 @@ export default class Board extends Component {
 
   isLegal( x, y ) {
     let selected = this.state.selected
-    return this.selectedSquare().piece.legalMove( selected.x, selected.y, x, y )
+    return ( this.selectedSquare().piece.legalMove( selected.x, selected.y, x, y ) && this.pathClear( selected.x, selected.y, x, y) )
+  }
+
+  pathClear( x, y, x2, y2 ) {
+    if ( this.selectedSquare().piece.name === 'Knight' ) {
+      return true
+    }
+
+    let dirX = x2 > x ? 1 : ( x2 === x ? 0 : -1 )
+    let dirY = y2 > y ? 1 : ( y2 === y ? 0 : -1 )
+    let spacesToMove = Math.abs( y2 - y ) > Math.abs( x2 - x ) ? Math.abs( y2 - y ) : Math.abs( x2 - x )
+
+    for ( let i = 1; i < spacesToMove; i++ ) {
+      // include a +1 after spacesToMove for allied pieces blocking, remove for enemy pieces
+      if ( this.pieceOnSquare( x + i * dirX, y + i * dirY ) ) {
+        return false
+      }
+    }
+    return true
+  }
+
+  pieceOnSquare( x, y ) {
+    if ( this.state.board[y] && this.state.board[y][x] ) {
+      return this.state.board[y][x].piece !== 'blank'
+    }
   }
 
   handleClick( x, y ) {
@@ -71,7 +94,9 @@ export default class Board extends Component {
       return
     }
     if (this.selectedSquare() && this.isLegal( x,y ) ) {
-      console.log( 'selected', this.state.selected )
+      console.log( '========= initial click', this.state.selected )
+      console.log('this thing', this.state.board[y][x].piece !== 'blank' );
+      console.log( '========= move to click', x , y )
       this.movePiece( x, y )
     }
     else if ( piece !== 'blank' && piece.color === this.state.nextPlayer ) {
@@ -96,7 +121,7 @@ export default class Board extends Component {
         classArray.push( square.piece.name );
         ( square.x + square.y ) % 2 === 0 ? classArray.push( 'whiteSquare' ) : classArray.push( 'blackSquare' )
         if ( this.selectedSquare() === square ) { classArray.push( 'highlight' )}
-        if ( this.state.selected && this.isLegal( square.x,square.y ) ) { classArray.push( 'highlight' )}
+        if ( this.state.selected && this.isLegal( square.x, square.y ) ) { classArray.push( 'highlight' )}
         if ( square.piece ) { classArray.push( square.piece.color )}
         let classes = classArray.join( ' ' )
 

@@ -1,3 +1,11 @@
+class Square {
+  constructor( x, y ) {
+    this.x = x
+    this.y = y
+    this.piece = 'blank'
+  }
+}
+
 class Pawn {
   constructor( color ) {
     this.color = color
@@ -69,6 +77,20 @@ class Bishop {
       return true
     }
   }
+
+  pathClear(x, y, x2, y2) {
+    let dirX = x2 > x ? 1 : -1
+    let dirY = y2 > y ? 1 : -1
+
+    for ( let i = 1; i < Math.abs( x2 - x ) - 1; ++i ) {
+      // if ( pieceOnSquare( x + i * dirX, y + i * dirY ) ) {
+      if ( Square( x + i * dirX, y + i * dirY ).piece !== 'blank' ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
 
 class Queen {
@@ -101,4 +123,4 @@ class King {
   }
 }
 
-export { Pawn, Rook, Knight, Bishop, Queen, King }
+export { Square, Pawn, Rook, Knight, Bishop, Queen, King }
