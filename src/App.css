@@ -1,4 +1,14 @@
+body {
+  background-color: black;
+}
+
 .board {
+}
+
+.button {
+  background-color: #246c5e;
+  background-color: black;
+  color: white;
 }
 
 .row {
@@ -9,79 +19,92 @@
 .square {
   display: flex;
   flex-direction: column;
-  height: 75px;
-  width: 75px;
+  text-align: center;
+  height: 12vh;
+  width: 12vh;
 }
 
 .blackSquare {
-  background-color: turquoise;
+  background-color: #246c5e;
 }
 
 .whiteSquare {
-  background-color: white;
+  background-color: black;
 }
 
 .highlight {
-  box-shadow: 0px 0px 0px 1px turquoise inset;
-  background-color: gold;
+  box-shadow: 0px 0px 0px 1px #246c5e inset;
+  background-color: goldenrod;
 }
 
 .white.King:after {
   content: "\2654";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .white.Queen:after {
   content: "\2655";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .white.Rook:after {
   content: "\2656";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .white.Bishop:after {
   content: "\2657";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .white.Knight:after {
   content: "\2658";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .white.Pawn:after {
   content: "\2659";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .black.King:after {
   content: "\265A";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .black.Queen:after {
   content: "\265B";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .black.Rook:after {
   content: "\265C";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .black.Bishop:after {
   content: "\265D";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .black.Knight:after {
   content: "\265E";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }
 
 .black.Pawn:after {
   content: "\265F";
-  font-size: 40px
+  color: white;
+  font-size: 7vh
 }

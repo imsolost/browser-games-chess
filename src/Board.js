@@ -10,6 +10,7 @@ export default class Board extends Component {
       nextPlayer: 'white'
     }
     this.setupPieces()
+    sessionStorage.setItem( 'new', JSON.stringify( this.state ) )
   }
 
   setupBoard() {
@@ -69,7 +70,6 @@ export default class Board extends Component {
     let spacesToMove = Math.abs( y2 - y ) > Math.abs( x2 - x ) ? Math.abs( y2 - y ) : Math.abs( x2 - x )
 
     for ( let i = 1; i < spacesToMove; i++ ) {
-      // include a +1 after spacesToMove for allied pieces blocking, remove for enemy pieces
       if ( this.pieceOnSquare( x + i * dirX, y + i * dirY ) ) {
         return false
       }
@@ -94,14 +94,23 @@ export default class Board extends Component {
       return
     }
     if (this.selectedSquare() && this.isLegal( x,y ) ) {
-      console.log( '========= initial click', this.state.selected )
-      console.log('this thing', this.state.board[y][x].piece !== 'blank' );
-      console.log( '========= move to click', x , y )
       this.movePiece( x, y )
     }
     else if ( piece !== 'blank' && piece.color === this.state.nextPlayer ) {
       this.setState({ selected: { x: x, y: y } })
     }
+  }
+
+  newGame() {
+    this.setState( JSON.parse( sessionStorage.getItem( 'new' ) ) )
+  }
+
+  loadGame() {
+    this.setState( JSON.parse( sessionStorage.getItem( 'state' ) ) )
+  }
+
+  saveGame() {
+    sessionStorage.setItem( 'state', JSON.stringify( this.state ) )
   }
 
   movePiece( x, y ) {
@@ -137,6 +146,9 @@ export default class Board extends Component {
     return (
       <div className='board'>
         { boardDisplay }
+        <button className='button' onClick={this.newGame.bind(this)}>New Game</button>
+        <button className='button' onClick={this.saveGame.bind(this)}>Save Game</button>
+        <button className='button' onClick={this.loadGame.bind(this)}>Load Game</button>
       </div>
     )
   }

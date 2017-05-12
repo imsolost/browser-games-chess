@@ -39,7 +39,6 @@ class Rook {
   constructor( color ) {
     this.color = color
     this.name = 'Rook'
-    this.moves = 0
   }
 
   legalMove( x, y, x2, y2 ) {
@@ -53,7 +52,6 @@ class Knight {
   constructor( color ) {
     this.color = color
     this.name = 'Knight'
-    this.moves = 0
   }
 
   legalMove( x, y, x2, y2 ) {
@@ -69,7 +67,6 @@ class Bishop {
   constructor( color ) {
     this.color = color
     this.name = 'Bishop'
-    this.moves = 0
   }
 
   legalMove( x, y, x2, y2 ) {
@@ -77,27 +74,12 @@ class Bishop {
       return true
     }
   }
-
-  pathClear(x, y, x2, y2) {
-    let dirX = x2 > x ? 1 : -1
-    let dirY = y2 > y ? 1 : -1
-
-    for ( let i = 1; i < Math.abs( x2 - x ) - 1; ++i ) {
-      // if ( pieceOnSquare( x + i * dirX, y + i * dirY ) ) {
-      if ( Square( x + i * dirX, y + i * dirY ).piece !== 'blank' ) {
-        return false;
-      }
-    }
-    return true;
-  }
-
 }
 
 class Queen {
   constructor( color ) {
     this.color = color
     this.name = 'Queen'
-    this.moves = 0
   }
 
   legalMove( x, y, x2, y2 ) {
@@ -111,7 +93,6 @@ class King {
   constructor( color ) {
     this.color = color
     this.name = 'King'
-    this.moves = 0
   }
 
   legalMove( x, y, x2, y2 ) {
