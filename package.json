@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start -- watch",
     "build": "react-scripts build",
-    "deploy": "npm run build&&gh-pages -d build"
+    "deploy": "npm run build && gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,12 @@
     "url": "https://github.com/imsolost/browser-games-chess/issues"
   },
   "dependencies": {
-    "http-server": "^0.9.0"
+    "http-server": "^0.9.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
-    "gh-pages": "^1.1.0"
+    "gh-pages": "^1.1.0",
+    "react-scripts": "1.0.17"
   }
 }
