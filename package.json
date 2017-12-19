@@ -2,8 +2,10 @@
   "name": "browser-games",
   "version": "0.0.0",
   "description": "A collection of games to play in a web browser.",
+  "homepage": "https://github.com/imsolost/browser-games-chess#readme",
   "scripts": {
-    "start": "react-scripts start -- watch"
+    "start": "react-scripts start -- watch",
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",
@@ -18,8 +20,10 @@
   "bugs": {
     "url": "https://github.com/imsolost/browser-games-chess/issues"
   },
-  "homepage": "https://github.com/imsolost/browser-games-chess#readme",
   "dependencies": {
     "http-server": "^0.9.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
   }
 }
